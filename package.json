@@ -1,0 +1,30 @@
+{
+  "name": "pays",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node-dev src/index.ts",
+    "build": "tsc",
+    "start:prod": "node build/index.js",
+    "resetDB": "ts-node-dev src/resetDB.ts",
+    "test": "jest",
+    "testDB:wait": "docker compose -f docker-compose.integration-tests.yml up testDB --wait"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.10.2",
+    "class-validator": "^0.14.1",
+    "reflect-metadata": "^0.2.2",
+    "sqlite3": "^5.1.7",
+    "ts-dotenv": "^0.9.1",
+    "ts-node-dev": "^2.0.0",
+    "type-graphql": "^2.0.0-beta.6",
+    "typeorm": "^0.3.20"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.17"
+  }
+}
