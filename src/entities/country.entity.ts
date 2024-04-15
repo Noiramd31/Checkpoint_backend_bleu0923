@@ -4,9 +4,12 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
+  JoinColumn,
 } from "typeorm";
-import { ObjectType, Field, Int, InputType } from "type-graphql";
+import { ObjectType, Field, Int, InputType, ID } from "type-graphql";
 import { Length } from "class-validator";
+import { Continent } from "./continent.entity";
+
 @Entity()
 @ObjectType()
 export class Country extends BaseEntity {
@@ -26,9 +29,9 @@ export class Country extends BaseEntity {
   @Field()
   emoji: string;
 
-  @Column()
-  @Field()
-  continent: string;
+  @Field(() => Continent)
+  @ManyToOne(() => Continent, (continent) => continent.countries)
+  continent: Continent;
 }
 @InputType()
 export class NewCountryInput {
@@ -41,9 +44,8 @@ export class NewCountryInput {
   @Field()
   @Length(2, 2, { message: "L'emoji doit contenir 2 caratères" })
   emoji: string;
-  @Field()
-  @Length(2, 30, { message: "Le nom doit contenir entre 2 et 30 caractères" })
-  continent: string;
+  @Field(() => ID)
+  continentId: number;
 }
 
 @ObjectType()

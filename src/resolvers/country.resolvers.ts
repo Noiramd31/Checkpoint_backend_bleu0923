@@ -8,7 +8,12 @@ import { Like } from "typeorm";
 class CountryResolver {
   @Query(() => [Country])
   async allCountries() {
-    return await Country.find({ order: { id: "desc" } });
+    return await Country.find({
+      order: { id: "desc" },
+      relations: {
+        continent: true,
+      },
+    });
   }
 
   @Query(() => Country)

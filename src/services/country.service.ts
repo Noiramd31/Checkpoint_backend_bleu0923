@@ -1,6 +1,8 @@
 import { Repository } from "typeorm";
 import db from "../db";
 import { Country, NewCountryInput } from "../entities/country.entity";
+import { Continent } from "../entities/continent.entity";
+import ContinentService from "./continent.service";
 
 export default class CountryService {
   db: Repository<Country>;
@@ -26,8 +28,15 @@ export default class CountryService {
     }
   }
 
-  async createCountry({ code, name, emoji, continent }: NewCountryInput) {
+  async createCountry({ code, name, emoji, continentId }: NewCountryInput) {
     try {
+      const continent = await new ContinentService().findContinentById(
+        continentId
+      );
+      if (!continent) {
+        console.error("Continent not found!");
+        return null;
+      }
       const newCountry = this.db.create({
         code,
         name,
